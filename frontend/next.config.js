@@ -25,29 +25,9 @@ const nextConfig = {
   },
   // Security Headers
   async headers() {
-    const isDev = process.env.NODE_ENV === 'development'
-    
-    // In development mode, relax CSP so localhost CSS/HMR/Next.js assets load smoothly
-    if (isDev) {
-      return [
-        {
-          source: '/(.*)',
-          headers: [
-            {
-              key: 'X-DNS-Prefetch-Control',
-              value: 'on'
-            },
-            {
-              key: 'X-Content-Type-Options',
-              value: 'nosniff'
-            },
-            {
-              key: 'Access-Control-Allow-Origin',
-              value: '*'
-            }
-          ]
-        }
-      ]
+    // Completely disable custom headers on localhost to prevent CSS/asset blocking
+    if (!process.env.VERCEL) {
+      return []
     }
 
     return [
