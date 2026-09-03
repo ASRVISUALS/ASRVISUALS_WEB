@@ -1,33 +1,48 @@
-/.DS_Store
+# OS
 .DS_Store
+**/.DS_Store
 
 # Node dependencies
+node_modules/
 **/node_modules/
 
-# Next.js build output
+# Next.js & Frontend build output
+.next/
 **/.next/
+out/
 **/out/
 
 # Build output
+dist/
 **/dist/
+dist-ssr/
+**/dist-ssr/
+build/
 **/build/
+*.tsbuildinfo
+**/*.tsbuildinfo
 
 # Logs
-**/npm-debug.log
-**/yarn-error.log
-**/pnpm-debug.log
+*.log
+**/*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Env files
-**/.env
+# Local Env files
+.env.local
 **/.env.local
 **/.env.*.local
 
 # Vercel
+.vercel/
 **/.vercel/
 
-# IDE
+# IDE & Editor
+.vscode/
 **/.vscode/
+.idea/
 **/.idea/
-**/*.swp
-**/*.swo
-
+*.swp
+*.swo

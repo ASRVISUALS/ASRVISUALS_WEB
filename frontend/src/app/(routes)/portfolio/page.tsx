@@ -1,144 +1,125 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { Eye } from 'lucide-react'
-import { useContentBlock } from '@/lib/useContentBlock'
-
-type PortfolioProject = {
-  id: number
-  title: string
-  category: string
-  videoUrl?: string
-  thumbnail: string
-  description: string
-  stats: { views: string; engagement: string }
-}
-
-const portfolioProjects: PortfolioProject[] = [
-  {
-    id: 1,
-    title: 'Product Launch Campaign',
-    category: 'Long-form Edit',
-    videoUrl: '', // Add: https://www.youtube.com/embed/VIDEO_ID?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3
-    thumbnail: '/images/portfolio/project1.jpg',
-    description: 'High-energy product launch video with motion graphics and compelling CTAs',
-    stats: { views: '2.5M', engagement: '12%' }
-  },
-  {
-    id: 2,
-    title: 'Brand Story Documentary',
-    category: 'Documentary Style',
-    videoUrl: '', // Add: https://www.youtube.com/embed/VIDEO_ID?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3
-    thumbnail: '/images/portfolio/project2.jpg',
-    description: 'Emotional brand story that increased audience trust by 40%',
-    stats: { views: '1.8M', engagement: '15%' }
-  },
-  {
-    id: 3,
-    title: 'Viral Short Series',
-    category: 'Short-form Content',
-    videoUrl: '', // Add: https://www.youtube.com/embed/VIDEO_ID?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3
-    thumbnail: '/images/portfolio/project3.jpg',
-    description: 'Series of 60-second shorts with 5M+ combined views',
-    stats: { views: '5.2M', engagement: '18%' }
-  },
-  {
-    id: 4,
-    title: 'Tutorial Series',
-    category: 'Educational Content',
-    videoUrl: '', // Add: https://www.youtube.com/embed/VIDEO_ID?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3
-    thumbnail: '/images/portfolio/project4.jpg',
-    description: 'Step-by-step tutorials with clean graphics and annotations',
-    stats: { views: '3.1M', engagement: '10%' }
-  },
-  {
-    id: 5,
-    title: 'Social Media Ads',
-    category: 'Paid Advertising',
-    videoUrl: '', // Add: https://www.youtube.com/embed/VIDEO_ID?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3
-    thumbnail: '/images/portfolio/project5.jpg',
-    description: 'High-converting ad creatives for Instagram and TikTok',
-    stats: { views: '8.7M', engagement: '14%' }
-  },
-  {
-    id: 6,
-    title: 'Event Highlight Reel',
-    category: 'Event Coverage',
-    videoUrl: '', // Add: https://www.youtube.com/embed/VIDEO_ID?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3
-    thumbnail: '/images/portfolio/project6.jpg',
-    description: 'Dynamic event coverage with B-roll and testimonials',
-    stats: { views: '950K', engagement: '11%' }
-  }
-]
-
-const categories = ['All', 'Long-form Edit', 'Short-form Content', 'Documentary Style', 'Educational Content', 'Paid Advertising', 'Event Coverage']
-const defaultHomeVideoUrls = [
-  'https://www.youtube.com/embed/uKAzMUHWgOE?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3',
-  'https://www.youtube.com/embed/Q9keCbxEJaw?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3',
-  'https://www.youtube.com/embed/JUBTiJXWPNc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3',
-  'https://www.youtube.com/embed/xrYzCAVuGV0?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
-]
-
-type PortfolioPageContent = {
-  title: string
-  description: string
-  categories: string[]
-  projects: PortfolioProject[]
-}
-
-type PortfolioVideoItem = {
-  videoUrl?: string
-  mode?: 'auto' | 'manual'
-}
-
-type PortfolioVideosContent = {
-  videoMode?: 'auto' | 'manual'
-  maxResults?: number
-  items?: PortfolioVideoItem[]
-}
-
-const defaultContent: PortfolioPageContent = {
-  title: 'Our Best Work',
-  description: 'Explore our portfolio of stunning video edits that have helped creators and brands achieve millions of views and engage their audiences.',
-  categories,
-  projects: portfolioProjects
-}
+import { motion, AnimatePresence } from 'framer-motion'
+import { Play, Eye, Smartphone, Film, ExternalLink, X, Search, Sparkles, Youtube, Heart } from 'lucide-react'
+import { 
+  YouTubeVideo, 
+  FALLBACK_CHANNEL_VIDEOS, 
+  fetchChannelVideos, 
+  YOUTUBE_CONFIG 
+} from '@/lib/youtube'
 
 export default function PortfolioPage() {
-  const content = useContentBlock('page.portfolio', defaultContent)
-  const videoContent = useContentBlock<PortfolioVideosContent>('portfolio.videos', {
-    videoMode: 'auto',
-    maxResults: 6,
-    items: []
+  const [videos, setVideos] = useState<YouTubeVideo[]>(FALLBACK_CHANNEL_VIDEOS)
+  const [categories, setCategories] = useState<string[]>(['All', 'Shorts (9:16)'])
+  const [selectedCategory, setSelectedCategory] = useState<string>('All')
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [activeModalVideo, setActiveModalVideo] = useState<YouTubeVideo | null>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+
+  // Auto-detect videos from YouTube channel
+  useEffect(() => {
+    let isMounted = true
+
+    async function loadVideos() {
+      try {
+        const res = await fetch('/api/youtube')
+        if (res.ok) {
+          const json = await res.json()
+          if (json.success && Array.from(json.data.videos || []).length > 0) {
+            if (isMounted) {
+              setVideos(json.data.videos)
+              if (json.data.categories?.length) {
+                setCategories(json.data.categories)
+              }
+              setIsLoading(false)
+              return
+            }
+          }
+        }
+      } catch (err) {
+        // Fallback to direct client fetch
+      }
+
+      try {
+        const fetchedVideos = await fetchChannelVideos()
+        if (isMounted && fetchedVideos.length > 0) {
+          setVideos(fetchedVideos)
+          
+          const cats = new Set<string>(['All'])
+          if (fetchedVideos.some(v => v.isShort)) cats.add('Shorts (9:16)')
+          if (fetchedVideos.some(v => !v.isShort)) cats.add('Long-Form (16:9)')
+          fetchedVideos.forEach(v => {
+            if (v.category && v.category !== 'Shorts' && v.category !== 'Video') {
+              cats.add(v.category)
+            }
+          })
+          setCategories(Array.from(cats))
+        }
+      } catch {
+        // Retain fallback
+      } finally {
+        if (isMounted) setIsLoading(false)
+      }
+    }
+
+    loadVideos()
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  // Modal keyboard handling
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveModalVideo(null)
+    }
+    if (activeModalVideo) {
+      window.addEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = 'unset'
+    }
+  }, [activeModalVideo])
+
+  // Filter and search
+  const filteredVideos = videos.filter((video) => {
+    const matchesCategory =
+      selectedCategory === 'All'
+        ? true
+        : selectedCategory === 'Shorts (9:16)'
+        ? video.isShort
+        : selectedCategory === 'Long-Form (16:9)'
+        ? !video.isShort
+        : video.category === selectedCategory || video.tags.includes(selectedCategory)
+
+    const matchesSearch =
+      searchQuery.trim() === ''
+        ? true
+        : video.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          video.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          video.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          video.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+
+    return matchesCategory && matchesSearch
   })
-  const [selectedCategory, setSelectedCategory] = useState(content.categories?.[0] || 'All')
-  const [selectedVideo, setSelectedVideo] = useState<number | null>(null)
 
-  const activeProjects = content.projects?.length ? content.projects : portfolioProjects
-  const activeCategories = content.categories?.length ? content.categories : categories
-  const videoOverrides = videoContent.items || []
-  const projectsWithVideos = activeProjects.map((project, index) => ({
-    ...project,
-    videoUrl: videoOverrides[index]?.videoUrl || project.videoUrl || defaultHomeVideoUrls[index]
-  }))
-
-  const availableProjects = projectsWithVideos.filter(
-    (project): project is PortfolioProject & { videoUrl: string } => Boolean(project.videoUrl)
-  )
-
-  const filteredProjects = selectedCategory === 'All' 
-    ? availableProjects
-    : availableProjects.filter(p => p.category === selectedCategory)
+  const shortsCount = videos.filter(v => v.isShort).length
+  const longFormCount = videos.filter(v => !v.isShort).length
 
   return (
-    <div className="min-h-screen bg-bg-secondary py-24">
-      {/* Floating Orbs */}
+    <div className="min-h-screen bg-[#0B0B0F] text-text-primary pt-28 pb-20 relative overflow-hidden">
+      {/* Ambient background glow */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="orb orb-1" />
-        <div className="orb orb-2" />
-        <div className="orb orb-3" />
+        <div className="orb orb-1 opacity-40" />
+        <div className="orb orb-2 opacity-30" />
+        <div className="orb orb-3 opacity-20" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -149,118 +130,327 @@ export default function PortfolioPage() {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mb-12"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-brand-red/10 text-brand-red text-sm font-semibold mb-4">
-            Portfolio
-          </span>
-          <h1 className="text-4xl sm:text-5xl font-bold text-text-primary mb-6">
-            {content.title}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-red/10 border border-brand-red/20 text-brand-red text-sm font-semibold mb-4">
+            <Sparkles className="w-4 h-4" />
+            <span>Official Video Showcase</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-6xl font-black text-text-primary mb-6 tracking-tight">
+            Our Best <span className="text-brand-red">Work</span>
           </h1>
-          <p className="text-xl text-text-secondary leading-relaxed">
-            {content.description}
+
+          <p className="text-lg sm:text-xl text-text-secondary leading-relaxed mb-6">
+            Explore our curated portfolio of cinematic video edits, viral shorts, and visual productions crafted for creators and brands.
           </p>
+
+          {/* Channel Stats Bar */}
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href={`https://www.youtube.com/channel/${YOUTUBE_CONFIG.CHANNEL_ID}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-white bg-brand-red hover:bg-brand-red-hover px-4 py-2 rounded-full transition-all shadow-[0_0_15px_rgba(217,4,41,0.4)]"
+            >
+              <Youtube className="w-4 h-4" />
+              <span>{YOUTUBE_CONFIG.CHANNEL_NAME} on YouTube</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+
+            <span className="text-xs text-text-secondary bg-[#15151E] px-3.5 py-2 rounded-full border border-white/10">
+              ⚡ {videos.length} Auto-Synced Videos ({shortsCount} Shorts, {longFormCount} Long-Form)
+            </span>
+          </div>
         </motion.div>
 
-        {/* Category Filter */}
+        {/* Filter and Search Controls */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-12 flex flex-wrap gap-3"
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="mb-10 flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between"
         >
-          {activeCategories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full font-medium transition-all ${
-                selectedCategory === category
-                  ? 'bg-brand-red text-white shadow-soft'
-                  : 'bg-bg-primary border border-border-divider text-text-secondary hover:border-brand-red hover:text-brand-red'
-              }`}
-            >
-              {category}
-            </button>
-          ))}
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap gap-2.5">
+            {categories.map((category) => {
+              const isSelected = selectedCategory === category
+              const isShortsCat = category.includes('Shorts')
+              const isLongCat = category.includes('Long-Form')
+
+              return (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                    isSelected
+                      ? 'bg-brand-red text-white shadow-[0_0_20px_rgba(217,4,41,0.4)] border border-brand-red font-semibold'
+                      : 'bg-[#15151E] text-text-secondary hover:text-text-primary border border-white/10 hover:border-white/20'
+                  }`}
+                >
+                  {isShortsCat && <Smartphone className="w-3.5 h-3.5" />}
+                  {isLongCat && <Film className="w-3.5 h-3.5" />}
+                  <span>{category}</span>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Search Input */}
+          <div className="relative w-full md:w-72">
+            <Search className="w-4 h-4 text-text-secondary absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search edits, styles, tags..."
+              className="w-full bg-[#15151E] border border-white/10 rounded-full pl-10 pr-4 py-2 text-sm text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-brand-red transition-colors"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary hover:text-white"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
+          </div>
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {filteredProjects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="glass-card overflow-hidden group cursor-pointer"
-              onClick={() => setSelectedVideo(project.id)}
-            >
-              {/* Video Thumbnail */}
-              <div className="relative aspect-video bg-gradient-to-br from-brand-red/20 to-brand-red/5 overflow-hidden">
-                <iframe
-                  src={project.videoUrl}
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
+        {/* Projects / Videos Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start mb-16">
+          <AnimatePresence mode="popLayout">
+            {filteredVideos.map((video, index) => {
+              const isShort = video.isShort
 
-              {/* Project Info */}
-              <div className="p-6">
-                <span className="inline-block px-3 py-1 rounded-full bg-brand-red/10 text-brand-red text-xs font-semibold mb-3">
-                  {project.category}
-                </span>
-                <h3 className="text-xl font-bold text-text-primary mb-2 group-hover:text-brand-red transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-text-secondary text-sm mb-4">
-                  {project.description}
-                </p>
+              return (
+                <motion.div
+                  key={video.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.92, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.92, y: 20 }}
+                  transition={{ duration: 0.4, delay: index * 0.04 }}
+                  onClick={() => setActiveModalVideo(video)}
+                  className={`group relative rounded-2xl bg-[#121218] border border-white/10 overflow-hidden cursor-pointer hover:border-brand-red/60 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(217,4,41,0.2)] flex flex-col ${
+                    isShort ? 'mx-auto w-full max-w-[320px]' : 'w-full'
+                  }`}
+                >
+                  {/* Media Wrapper with dynamic viewing ratio */}
+                  <div
+                    className={`relative w-full overflow-hidden bg-black ${
+                      isShort ? 'aspect-[9/16]' : 'aspect-video'
+                    }`}
+                  >
+                    {/* Video Thumbnail */}
+                    <img
+                      src={video.thumbnail}
+                      alt={video.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
 
-                {/* Stats */}
-                <div className="flex items-center gap-4 text-sm">
-                  <div className="flex items-center gap-1 text-text-secondary">
-                    <Eye className="w-4 h-4" />
-                    <span>{project.stats.views}</span>
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30 group-hover:from-black/90 transition-opacity" />
+
+                    {/* Format Badge (Top Left) */}
+                    <div className="absolute top-3 left-3 flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg border border-white/10 text-xs font-medium text-white">
+                      {isShort ? (
+                        <>
+                          <Smartphone className="w-3.5 h-3.5 text-brand-red" />
+                          <span>Shorts 9:16</span>
+                        </>
+                      ) : (
+                        <>
+                          <Film className="w-3.5 h-3.5 text-brand-red" />
+                          <span>16:9 HD</span>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Duration Badge (Top Right) */}
+                    {video.formattedDuration && (
+                      <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-xs font-mono font-semibold text-white/90 border border-white/10">
+                        {video.formattedDuration}
+                      </div>
+                    )}
+
+                    {/* Play Button Overlay (Center) */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-14 h-14 rounded-full bg-brand-red/90 text-white flex items-center justify-center shadow-[0_0_25px_rgba(217,4,41,0.6)] transform group-hover:scale-110 transition-transform duration-300">
+                        <Play className="w-6 h-6 fill-white ml-0.5" />
+                      </div>
+                    </div>
+
+                    {/* Category & Stats (Bottom of video preview) */}
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white/90">
+                      <span className="bg-brand-red/20 backdrop-blur-md text-brand-red border border-brand-red/30 px-2 py-0.5 rounded font-medium">
+                        {video.category}
+                      </span>
+                      {video.views && (
+                        <div className="flex items-center gap-1 bg-black/50 backdrop-blur-md px-2 py-0.5 rounded text-white/80">
+                          <Eye className="w-3 h-3" />
+                          <span>{video.views}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1 text-brand-red font-semibold">
-                    <span>{project.stats.engagement} engagement</span>
+
+                  {/* Video Meta Info */}
+                  <div className="p-4 flex-1 flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-bold text-base text-text-primary group-hover:text-brand-red transition-colors line-clamp-2 mb-1.5">
+                        {video.title}
+                      </h3>
+                      {video.description && (
+                        <p className="text-text-secondary text-xs line-clamp-2 mb-3">
+                          {video.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs text-text-secondary">
+                      <span className="font-medium text-white/80">{video.creator}</span>
+                      <div className="flex items-center gap-2">
+                        {video.likes && video.likes !== '0' && (
+                          <span className="flex items-center gap-1 text-brand-red">
+                            <Heart className="w-3 h-3 fill-brand-red" />
+                            {video.likes}
+                          </span>
+                        )}
+                        <span>{video.publishedDateFormatted}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                </motion.div>
+              )
+            })}
+          </AnimatePresence>
         </div>
+
+        {/* Empty State */}
+        {filteredVideos.length === 0 && !isLoading && (
+          <div className="text-center py-20 bg-[#121218] border border-white/10 rounded-2xl p-8 mb-16">
+            <p className="text-text-secondary text-lg mb-2">No videos matched your search or category.</p>
+            <p className="text-xs text-text-secondary mb-4">Try checking another category or clearing your search keywords.</p>
+            <button
+              onClick={() => {
+                setSelectedCategory('All')
+                setSearchQuery('')
+              }}
+              className="px-6 py-2.5 rounded-full bg-brand-red text-white text-sm font-semibold hover:bg-brand-red-hover transition-colors"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
 
         {/* CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="glass-card p-8 md:p-12 text-center"
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="relative rounded-3xl bg-gradient-to-br from-[#181824] via-[#121218] to-[#0D0D12] border border-white/10 p-8 md:p-14 text-center overflow-hidden shadow-2xl"
         >
-          <h2 className="text-3xl font-bold text-text-primary mb-4">
-            Ready to Create Something Amazing?
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-brand-red/10 blur-[100px] pointer-events-none rounded-full" />
+          
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-text-primary mb-4">
+            Ready to Create Something <span className="text-brand-red">Viral</span>?
           </h2>
-          <p className="text-text-secondary text-lg mb-8 max-w-2xl mx-auto">
-            Let's collaborate on your next project and create content that resonates with your audience.
+          <p className="text-text-secondary text-base sm:text-lg mb-8 max-w-2xl mx-auto">
+            Let&apos;s collaborate on your next video series, high-converting social ads, or cinematic edits that resonate with millions.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
               href="https://cal.com/asrvisuals"
               target="_blank"
-              className="inline-flex items-center gap-2 rounded-full bg-brand-red hover:bg-brand-red-hover px-8 py-3 text-base font-semibold text-white transition-all btn-bounce shadow-soft"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-brand-red hover:bg-brand-red-hover px-8 py-3.5 text-base font-semibold text-white transition-all btn-bounce shadow-[0_0_20px_rgba(217,4,41,0.4)]"
             >
-              Book a Call
+              Book a Strategy Call
             </Link>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-border-divider hover:border-brand-red bg-bg-primary px-8 py-3 text-base font-semibold text-text-primary transition-all"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 hover:border-brand-red bg-[#161622] hover:bg-[#1C1C2B] px-8 py-3.5 text-base font-semibold text-text-primary transition-all"
             >
               Contact Us
             </Link>
           </div>
         </motion.div>
       </div>
+
+      {/* Cinematic Lightbox Modal Player */}
+      <AnimatePresence>
+        {activeModalVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/85 backdrop-blur-md"
+            onClick={() => setActiveModalVideo(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className={`relative bg-[#121218] border border-white/15 rounded-2xl overflow-hidden shadow-2xl w-full ${
+                activeModalVideo.isShort ? 'max-w-sm sm:max-w-md' : 'max-w-4xl'
+              }`}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setActiveModalVideo(null)}
+                aria-label="Close modal"
+                className="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/70 hover:bg-brand-red text-white flex items-center justify-center border border-white/10 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Video Player Container */}
+              <div
+                className={`relative w-full bg-black ${
+                  activeModalVideo.isShort ? 'aspect-[9/16]' : 'aspect-video'
+                }`}
+              >
+                <iframe
+                  src={activeModalVideo.embedUrl}
+                  title={activeModalVideo.title}
+                  className="w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+
+              {/* Video Info */}
+              <div className="p-5 flex items-center justify-between gap-4 border-t border-white/10">
+                <div className="min-w-0 flex-1">
+                  <span className="inline-block text-xs font-semibold text-brand-red mb-1">
+                    {activeModalVideo.category} • {activeModalVideo.isShort ? 'Shorts 9:16' : '16:9 HD'}
+                  </span>
+                  <h3 className="font-bold text-lg text-text-primary truncate">
+                    {activeModalVideo.title}
+                  </h3>
+                  <p className="text-xs text-text-secondary mt-0.5">
+                    {activeModalVideo.creator} • {activeModalVideo.views} views • {activeModalVideo.publishedDateFormatted}
+                  </p>
+                </div>
+
+                <a
+                  href={activeModalVideo.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-shrink-0 inline-flex items-center gap-1.5 bg-white/10 hover:bg-brand-red text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors border border-white/10"
+                >
+                  <Youtube className="w-3.5 h-3.5" />
+                  <span>Open on YouTube</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

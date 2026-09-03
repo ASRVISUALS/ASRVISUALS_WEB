@@ -29,68 +29,75 @@ type YoutubeSearchResponse = {
 }
 
 const getLatestYoutubeVideoUrl = async (): Promise<string | null> => {
-  const apiKey = process.env.YOUTUBE_API_KEY
-  const channelId = process.env.YOUTUBE_CHANNEL_ID
+  const apiKey = process.env.YOUTUBE_API_KEY || 'AIzaSyBTznIyuRmX03c9n6mmCy0x8w3A3eWQNCQ'
+  const channelId = process.env.YOUTUBE_CHANNEL_ID || 'UCdIeEUCrh0rPYyK2Nuk9NDw'
 
   if (!apiKey || !channelId) {
     return null
   }
 
-  const url = new URL('https://www.googleapis.com/youtube/v3/search')
-  url.searchParams.set('part', 'snippet')
-  url.searchParams.set('channelId', channelId)
-  url.searchParams.set('maxResults', '1')
-  url.searchParams.set('order', 'date')
-  url.searchParams.set('type', 'video')
-  url.searchParams.set('key', apiKey)
+  const uploadsPlaylistId = channelId.startsWith('UC') ? 'UU' + channelId.substring(2) : channelId
 
   try {
+    const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
+    url.searchParams.set('part', 'snippet,contentDetails')
+    url.searchParams.set('playlistId', uploadsPlaylistId)
+    url.searchParams.set('maxResults', '1')
+    url.searchParams.set('key', apiKey)
+
     const response = await fetch(url.toString())
-    if (!response.ok) {
-      return null
+    if (response.ok) {
+      const data = await response.json()
+      const videoId = data?.items?.[0]?.contentDetails?.videoId || data?.items?.[0]?.snippet?.resourceId?.videoId
+      if (videoId) return buildYoutubeEmbedUrl(videoId)
     }
-    const data = (await response.json()) as YoutubeSearchResponse
-    const videoId = data?.items?.[0]?.id?.videoId
-    if (!videoId) {
-      return null
-    }
-    return buildYoutubeEmbedUrl(videoId)
   } catch {
-    return null
+    // Fall through to fallback
   }
+
+  return 'https://www.youtube.com/embed/YOzDH_lIPhc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
 }
 
 const getLatestYoutubeVideoUrls = async (maxResults: number): Promise<string[]> => {
-  const apiKey = process.env.YOUTUBE_API_KEY
-  const channelId = process.env.YOUTUBE_CHANNEL_ID
+  const apiKey = process.env.YOUTUBE_API_KEY || 'AIzaSyBTznIyuRmX03c9n6mmCy0x8w3A3eWQNCQ'
+  const channelId = process.env.YOUTUBE_CHANNEL_ID || 'UCdIeEUCrh0rPYyK2Nuk9NDw'
 
   if (!apiKey || !channelId) {
-    return []
+    return [
+      'https://www.youtube.com/embed/YOzDH_lIPhc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3',
+      'https://www.youtube.com/embed/HV3gmADlZ9c?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+    ]
   }
 
   const safeMaxResults = Math.min(Math.max(maxResults, 1), 50)
-  const url = new URL('https://www.googleapis.com/youtube/v3/search')
-  url.searchParams.set('part', 'snippet')
-  url.searchParams.set('channelId', channelId)
-  url.searchParams.set('maxResults', String(safeMaxResults))
-  url.searchParams.set('order', 'date')
-  url.searchParams.set('type', 'video')
-  url.searchParams.set('key', apiKey)
+  const uploadsPlaylistId = channelId.startsWith('UC') ? 'UU' + channelId.substring(2) : channelId
 
   try {
+    const url = new URL('https://www.googleapis.com/youtube/v3/playlistItems')
+    url.searchParams.set('part', 'snippet,contentDetails')
+    url.searchParams.set('playlistId', uploadsPlaylistId)
+    url.searchParams.set('maxResults', String(safeMaxResults))
+    url.searchParams.set('key', apiKey)
+
     const response = await fetch(url.toString())
-    if (!response.ok) {
-      return []
+    if (response.ok) {
+      const data = await response.json()
+      const items = data?.items || []
+      const urls = items
+        .map((item: any) => item?.contentDetails?.videoId || item?.snippet?.resourceId?.videoId)
+        .filter(Boolean)
+        .map((videoId: string) => buildYoutubeEmbedUrl(videoId))
+
+      if (urls.length > 0) return urls
     }
-    const data = (await response.json()) as YoutubeSearchResponse
-    const items = data?.items || []
-    return items
-      .map((item: any) => item?.id?.videoId)
-      .filter(Boolean)
-      .map((videoId: string) => buildYoutubeEmbedUrl(videoId))
   } catch {
-    return []
+    // Fall through
   }
+
+  return [
+    'https://www.youtube.com/embed/YOzDH_lIPhc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3',
+    'https://www.youtube.com/embed/HV3gmADlZ9c?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+  ]
 }
 
 export const getContentBlock = async (req: Request, res: Response) => {

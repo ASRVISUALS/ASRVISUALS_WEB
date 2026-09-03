@@ -32,7 +32,7 @@ const defaultContent: AboutContent = {
   stats: defaultStats,
   ctaLabel: 'Learn More About Us',
   ctaHref: '/about',
-  videoUrl: 'https://www.youtube.com/embed/OctCccn7XuY?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
+  videoUrl: 'https://www.youtube.com/embed/YOzDH_lIPhc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
 }
 
 const About = ({ content = defaultContent }: { content?: AboutContent }) => {
