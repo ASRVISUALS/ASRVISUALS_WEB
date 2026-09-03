@@ -25,6 +25,31 @@ const nextConfig = {
   },
   // Security Headers
   async headers() {
+    const isDev = process.env.NODE_ENV === 'development'
+    
+    // In development mode, relax CSP so localhost CSS/HMR/Next.js assets load smoothly
+    if (isDev) {
+      return [
+        {
+          source: '/(.*)',
+          headers: [
+            {
+              key: 'X-DNS-Prefetch-Control',
+              value: 'on'
+            },
+            {
+              key: 'X-Content-Type-Options',
+              value: 'nosniff'
+            },
+            {
+              key: 'Access-Control-Allow-Origin',
+              value: '*'
+            }
+          ]
+        }
+      ]
+    }
+
     return [
       {
         source: '/(.*)',
@@ -57,18 +82,17 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.youtube.com https://cal.com https://js.stripe.com",
-              "style-src 'self' 'unsafe-inline'",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.youtube.com https://cal.com https://js.stripe.com https://va.vercel-scripts.com",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "img-src 'self' data: https: blob:",
-              "font-src 'self' data:",
+              "font-src 'self' data: https://fonts.gstatic.com https://db.onlinewebfonts.com",
               "frame-src 'self' https://www.youtube.com https://youtube.com https://cal.com https://js.stripe.com",
-              "connect-src 'self' https://www.youtube.com https://api.stripe.com",
+              "connect-src 'self' https://www.youtube.com https://api.stripe.com https://asrvisuals.live https://va.vercel-scripts.com",
               "media-src 'self' https://www.youtube.com",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
-              "frame-ancestors 'self' http://localhost:5173 https://admin-six-steel.vercel.app",
-              "upgrade-insecure-requests"
+              "frame-ancestors 'self' http://localhost:5173 https://admin-six-steel.vercel.app"
             ].join('; ')
           }
         ],
