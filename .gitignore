@@ -30,10 +30,16 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Local Env files
-.env.local
-**/.env.local
-**/.env.*.local
+# Environment and Secret files
+.env
+.env.*
+*.env
+**/.env
+**/.env.*
+!*.env.example
+!**/*.env.example
+!*.env.local.example
+!**/*.env.local.example
 
 # Vercel
 .vercel/

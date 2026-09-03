@@ -21,7 +21,7 @@ export type YouTubeVideo = {
 
 export const YOUTUBE_CONFIG = {
   CHANNEL_ID: process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID || 'UCdIeEUCrh0rPYyK2Nuk9NDw',
-  API_KEY: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY || 'AIzaSyBTznIyuRmX03c9n6mmCy0x8w3A3eWQNCQ',
+  API_KEY: process.env.NEXT_PUBLIC_YOUTUBE_API_KEY || process.env.YOUTUBE_API_KEY || '',
   CHANNEL_NAME: 'ASR VISUALS',
   CHANNEL_HANDLE: '@asrvisuals_1'
 }

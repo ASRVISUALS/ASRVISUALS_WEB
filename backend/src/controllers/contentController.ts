@@ -29,11 +29,11 @@ type YoutubeSearchResponse = {
 }
 
 const getLatestYoutubeVideoUrl = async (): Promise<string | null> => {
-  const apiKey = process.env.YOUTUBE_API_KEY || 'AIzaSyBTznIyuRmX03c9n6mmCy0x8w3A3eWQNCQ'
+  const apiKey = process.env.YOUTUBE_API_KEY
   const channelId = process.env.YOUTUBE_CHANNEL_ID || 'UCdIeEUCrh0rPYyK2Nuk9NDw'
 
   if (!apiKey || !channelId) {
-    return null
+    return 'https://www.youtube.com/embed/YOzDH_lIPhc?controls=1&rel=0&modestbranding=1&fs=1&iv_load_policy=3'
   }
 
   const uploadsPlaylistId = channelId.startsWith('UC') ? 'UU' + channelId.substring(2) : channelId
@@ -59,7 +59,7 @@ const getLatestYoutubeVideoUrl = async (): Promise<string | null> => {
 }
 
 const getLatestYoutubeVideoUrls = async (maxResults: number): Promise<string[]> => {
-  const apiKey = process.env.YOUTUBE_API_KEY || 'AIzaSyBTznIyuRmX03c9n6mmCy0x8w3A3eWQNCQ'
+  const apiKey = process.env.YOUTUBE_API_KEY
   const channelId = process.env.YOUTUBE_CHANNEL_ID || 'UCdIeEUCrh0rPYyK2Nuk9NDw'
 
   if (!apiKey || !channelId) {
