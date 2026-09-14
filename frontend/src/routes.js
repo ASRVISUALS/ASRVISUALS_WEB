@@ -1,0 +1,16 @@
+export const routes = {
+  HOME: '/',
+  ABOUT: '/about',
+  SERVICES: '/services',
+  SERVICES_WORK: '/services#our-work',
+  BLOG: '/blog',
+  CONTACT: '/contact',
+  TERMS: '/terms-and-conditions',
+  PRIVACY: '/privacy-policy',
+  REFUND: '/refund-policy',
+  TIP: '/tip-us',
+  ADMIN: '/admin',
+  ADMIN_BLOG: '/admin/blog',
+  ADMIN_SETTINGS: '/admin/settings',
+  THUMBNAILS: '/thumbnails',
+};

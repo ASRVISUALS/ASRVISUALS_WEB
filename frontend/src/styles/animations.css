@@ -1,0 +1,113 @@
+/* Global animation utilities */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatBlob {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(20px, 16px, 0) scale(1.06);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes huePulse {
+  0% {
+    filter: hue-rotate(0deg) saturate(100%);
+  }
+  50% {
+    filter: hue-rotate(-5deg) saturate(108%);
+  }
+  100% {
+    filter: hue-rotate(0deg) saturate(100%);
+  }
+}
+
+@keyframes riseFade {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.36s ease both;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.44s ease both;
+}
+
+.slide-in-up {
+  animation: slideInUp 0.5s ease both;
+}
+
+.pop-in {
+  animation: popIn 0.32s ease both;
+}
+
+.rise-fade {
+  animation: riseFade 0.52s ease both;
+}
+
+.hue-pulse {
+  animation: huePulse 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

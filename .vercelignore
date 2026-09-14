@@ -1,0 +1,15 @@
+# Dependencies and local caches
+node_modules
+**/node_modules
+**/.cache
+
+# Local tooling artifacts
+frontend/.chrome-for-lh
+frontend/lh-*.json
+
+# Local build outputs
+frontend/build
+backend/dist
+
+# Misc
+.DS_Store

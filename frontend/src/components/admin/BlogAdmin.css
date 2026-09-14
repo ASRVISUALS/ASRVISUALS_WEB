@@ -1,0 +1,8 @@
+.blog-admin {
+  padding: 1rem;
+}
+
+.blog-admin .btn,
+.blog-admin .btn-small {
+  border-radius: 10px;
+}

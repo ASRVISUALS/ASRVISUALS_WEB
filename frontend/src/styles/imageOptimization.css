@@ -1,0 +1,177 @@
+/**
+ * Mobile Image Optimization CSS
+ * Optimizes image rendering and loading performance on mobile devices
+ */
+
+/* Base image optimization */
+img {
+  /* Prevent layout shift when images load */
+  content-visibility: auto;
+  contain: layout style paint;
+  
+  /* Optimize rendering performance */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Ensure images scale responsively */
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Picture element optimization */
+picture {
+  display: contents;
+}
+
+/* Image containers */
+.image-container,
+.blog-detail-image,
+.blog-image,
+.service-media,
+.client-image,
+.testimonial-avatar,
+.hero-image-shell {
+  /* Prevent layout shift and optimize rendering */
+  overflow: hidden;
+  position: relative;
+  background-color: transparent;
+}
+
+/* Responsive image container sizing */
+.image-container {
+  width: 100%;
+  aspect-ratio: auto;
+}
+
+/* Hero image optimization for mobile */
+.hero-image-shell {
+  aspect-ratio: 1 / 1;
+}
+
+@media (min-width: 768px) {
+  .hero-image-shell {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* Blog image optimization */
+.blog-detail-image,
+.blog-image {
+  aspect-ratio: 16 / 9;
+}
+
+/* Service card image optimization */
+.service-media {
+  aspect-ratio: 3 / 2;
+}
+
+/* Thumbnail optimization */
+.testimonial-avatar,
+.client-image {
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Mobile-first optimizations */
+@media (max-width: 640px) {
+  /* Reduce image quality on slow networks (experimental) */
+  @supports (image-rendering: pixelated) {
+    img[loading="lazy"] {
+      image-rendering: auto;
+    }
+  }
+  
+  /* Optimize hero images for small screens */
+  .hero-image-shell img {
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  /* Reduce font rendering overhead on image containers */
+  .image-container,
+  .blog-detail-image,
+  .service-media {
+    will-change: auto; /* Avoid over-optimization */
+  }
+  
+  /* Keep image paint cost low on small screens */
+  .portfolio-grid img,
+  .gallery img {
+    content-visibility: auto;
+  }
+}
+
+/* Tablet optimization */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .service-media {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* Desktop optimization */
+@media (min-width: 1025px) {
+  /* Optimize critical images for faster rendering */
+  img[loading="eager"],
+  img[fetchPriority="high"] {
+    will-change: transform;
+  }
+}
+
+/* Image error state */
+img:broken,
+img[alt]:after {
+  content: attr(alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  color: #999;
+  font-size: 12px;
+  min-height: 100px;
+}
+
+/* Prevent FOUC (Flash of Unstyled Content) for images */
+img[src*="webp"] {
+  /* WebP fallback optimization */
+  display: block;
+}
+
+/* Optimize image rendering in scrollable containers */
+.horizontal-scroll img,
+.vertical-scroll img {
+  will-change: transform;
+}
+
+/* High-quality image rendering for important content */
+.featured-image,
+.hero-image,
+.portfolio-thumbnail {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Print optimization */
+@media print {
+  img {
+    max-width: 100%;
+    page-break-inside: avoid;
+  }
+}
+
+/* Reduce data usage on slow networks */
+@media (prefers-reduced-data: reduce) {
+  /* Avoid aggressive compositing work on slow networks */
+  img[loading="eager"] {
+    will-change: auto;
+  }
+}
+
+/* Dark mode image optimization */
+@media (prefers-color-scheme: dark) {
+  .image-container {
+    background-color: #1a1a1a;
+  }
+}

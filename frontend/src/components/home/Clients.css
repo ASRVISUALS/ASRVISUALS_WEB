@@ -1,0 +1,267 @@
+.clients-section {
+  padding: 80px 40px;
+  background: linear-gradient(180deg, #f9fafc 0%, #f2f4f7 100%);
+  margin: 80px 0;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.clients-container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.clients-header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.clients-header h2 {
+  font-size: clamp(1.8rem, 4.8vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #0f1524;
+  letter-spacing: -0.5px;
+}
+
+.clients-header p {
+  font-size: 1.02rem;
+  color: #4a4f5e;
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.clients-slider {
+  position: relative;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #e5e9f1;
+  background: #ffffff;
+  box-shadow: 0 16px 34px rgba(19, 22, 31, 0.12);
+  overflow: hidden;
+}
+
+.clients-slider::before,
+.clients-slider::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.clients-slider::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(249, 250, 252, 0.96), transparent);
+}
+
+.clients-slider::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(249, 250, 252, 0.96), transparent);
+}
+
+.clients-track {
+  display: flex;
+  width: max-content;
+  gap: 18px;
+  align-items: center;
+  animation: clientsLoop 38s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.clients-slider:hover .clients-track,
+.clients-slider:focus-within .clients-track {
+  animation-play-state: paused;
+}
+
+.client-card {
+  flex: 0 0 180px;
+  width: 180px;
+  min-height: 224px;
+  background: #ffffff;
+  padding: 22px 18px;
+  border-radius: 16px;
+  border: 1px solid #e6e9f2;
+  transition: all 0.12s ease;
+  text-align: center;
+  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.12);
+  cursor: pointer;
+}
+
+.client-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 16px 40px rgba(17, 24, 39, 0.14);
+}
+
+.client-image {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  margin: 0 auto 16px;
+  display: block;
+  border: 1px solid #e3e6ef;
+  box-shadow: 0 8px 16px rgba(17, 24, 39, 0.12);
+}
+
+.client-card h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #121726;
+  margin: 0 0 6px;
+  line-height: 1.3;
+  letter-spacing: -0.2px;
+}
+
+.client-card p {
+  margin: 0;
+  font-size: 0.86rem;
+  letter-spacing: 0.3px;
+  color: #4c5263;
+  font-weight: 600;
+}
+
+@keyframes clientsLoop {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(calc(-50% - 9px), 0, 0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .clients-section {
+    padding: 60px 30px;
+    margin: 60px 0;
+  }
+
+  .clients-slider {
+    padding: 14px;
+  }
+
+  .clients-slider::before,
+  .clients-slider::after {
+    width: 70px;
+  }
+
+  .client-card {
+    flex-basis: 178px;
+    width: 178px;
+    min-height: 208px;
+    padding: 20px 16px;
+  }
+
+  .client-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .clients-track {
+    animation-duration: 33s;
+  }
+}
+
+@media (max-width: 768px) {
+  .clients-section {
+    padding: 40px 20px;
+    margin: 40px 0;
+    border-radius: 12px;
+  }
+
+  .clients-slider {
+    padding: 12px;
+  }
+
+  .clients-slider::before,
+  .clients-slider::after {
+    width: 56px;
+  }
+
+  .clients-track {
+    gap: 14px;
+    animation-duration: 27s;
+  }
+
+  .client-card {
+    flex-basis: 160px;
+    width: 160px;
+    min-height: 190px;
+    padding: 16px 12px;
+  }
+
+  .client-image {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 12px;
+  }
+
+  .client-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .client-card p {
+    font-size: 0.76rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .clients-section {
+    padding: 30px 14px;
+    margin: 30px 0;
+  }
+
+  .clients-slider {
+    padding: 10px;
+  }
+
+  .clients-slider::before,
+  .clients-slider::after {
+    width: 36px;
+  }
+
+  .clients-track {
+    gap: 12px;
+    animation-duration: 23s;
+  }
+
+  .client-card {
+    flex-basis: 130px;
+    width: 130px;
+    min-height: 166px;
+    padding: 12px 10px;
+    border-radius: 12px;
+  }
+
+  .client-image {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+  }
+
+  .client-card h3 {
+    font-size: 0.82rem;
+  }
+
+  .client-card p {
+    font-size: 0.7rem;
+  }
+}

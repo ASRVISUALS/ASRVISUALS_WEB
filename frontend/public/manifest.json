@@ -1,0 +1,20 @@
+{
+  "short_name": "ASR Visuals",
+  "name": "ASR Visuals Portfolio",
+  "icons": [
+    {
+      "src": "asr-logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "asr-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#e31b1b",
+  "background_color": "#ffffff"
+}

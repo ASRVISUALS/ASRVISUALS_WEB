@@ -1,0 +1,117 @@
+/* Minimal neutral theme layer */
+:root {
+  --theme-soft-bg: #ffffff;
+  --theme-soft-panel: #ffffff;
+  --theme-soft-border: #e5eaf2;
+  --theme-soft-ink: #1a2130;
+}
+
+body,
+main,
+.main-layout,
+.services-page,
+.home-page,
+.about-page,
+.blog-page,
+.portfolio-merged,
+.contact-page,
+.admin-page {
+  color: var(--theme-soft-ink);
+}
+
+/* Lighten heavy content zones while preserving existing layout */
+.services-hero,
+.contact-hero,
+.contact-cta,
+.case-studies-section,
+.testimonial-case-study,
+.work-carousel-shell,
+.video-shell,
+.shorts-shell,
+.hero-section,
+.before-after-section,
+.comparison-container,
+.clients-section,
+.portfolio-merged,
+.pricing-cta,
+.three-pillars,
+.admin-card,
+.blog-detail,
+.contact-form-wrapper,
+.thumbnails-gallery,
+.video-player-container {
+  background: var(--theme-soft-bg) !important;
+  border-color: var(--theme-soft-border) !important;
+}
+
+/* Remove decorative ambient blobs for cleaner minimal UI */
+body::before,
+body::after {
+  display: none !important;
+}
+
+.case-study-card,
+.work-carousel-card,
+.video-card,
+.short-player,
+.video-poster-btn,
+.thumbnail-card,
+.service-card,
+.testimonial-card,
+.client-card,
+.blog-card,
+.admin-table,
+.stat-card,
+.tip-card,
+.contact-info-card {
+  background: var(--theme-soft-panel) !important;
+  border-color: var(--theme-soft-border) !important;
+  box-shadow: 0 6px 16px rgba(17, 20, 34, 0.06) !important;
+}
+
+/* Improve readability where dark backgrounds were hardcoded */
+.before-layer,
+.after-layer,
+.before-after-img,
+.case-study-image img,
+.video-player,
+.thumbnail-preview,
+.feature-media,
+.hero-media {
+  background-color: #ffffff !important;
+}
+
+/* Standardize accent states and active indicators */
+.tab-btn.active,
+.category-btn.active,
+.video-tab-btn.active,
+.filter-btn.active,
+.service-chip.active,
+.chip.active {
+  color: #ffffff !important;
+  background: #d61f24 !important;
+  border-color: var(--primary-red-dark) !important;
+}
+
+.layer-label,
+.case-result,
+.badge,
+.status-pill {
+  background: #ffffff !important;
+  color: #1f222a !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Keep branded social colors while matching the lighter visual system */
+.social-btn.twitter { background: #2795e9 !important; color: #ffffff !important; }
+.social-btn.facebook { background: #2374e1 !important; color: #ffffff !important; }
+.social-btn.linkedin { background: #0a66c2 !important; color: #ffffff !important; }
+
+/* Accessibility: make very dark overlays readable on light theme */
+[style*="rgba(0, 0, 0, 0.8)"],
+[style*="rgba(0,0,0,0.8)"],
+[style*="background:#000"],
+[style*="background: #000"] {
+  background-color: rgba(255, 248, 248, 0.95) !important;
+  color: #1a1b20 !important;
+}

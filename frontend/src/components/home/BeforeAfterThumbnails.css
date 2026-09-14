@@ -1,0 +1,209 @@
+/* Before/After Case Section */
+.before-after-section {
+  padding: clamp(1.2rem, 3vw, 2rem);
+  background: linear-gradient(145deg, #ffffff 0%, #fff3f3 58%, #fff9f4 100%);
+  margin: 2.4rem 0;
+  border-radius: 18px;
+  border: 1px solid #efcfcf;
+  box-shadow: 0 14px 30px rgba(18, 16, 24, 0.07);
+  position: relative;
+  overflow: hidden;
+}
+
+.before-after-section .section-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.before-after-section .section-header h2 {
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  font-weight: 800;
+  color: #8f1414;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.before-after-section .section-header p {
+  font-size: 0.98rem;
+  color: #576071;
+  margin: 0;
+}
+
+.case-grid {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.case-text {
+  background: #ffffff;
+  color: #222935;
+  border-radius: 14px;
+  border: 1px solid #f1d3d3;
+  box-shadow: 0 8px 18px rgba(17, 15, 20, 0.05);
+  padding: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.case-text ul {
+  margin: 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.case-text li {
+  color: #4b5364;
+}
+
+.case-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  width: min(100%, 980px);
+  margin: 0 auto;
+}
+
+.case-card {
+  border-radius: 14px;
+  padding: 0.85rem;
+  color: #2a313f;
+  display: grid;
+  gap: 0.55rem;
+  border: 1px solid #f1d2d2;
+  background: #ffffff;
+  box-shadow: 0 10px 22px rgba(16, 14, 19, 0.06);
+  align-items: start;
+}
+
+.case-card.before {
+  background: linear-gradient(145deg, #ffffff 0%, #fff6f6 100%);
+}
+
+.case-card.after {
+  background: linear-gradient(145deg, #ffffff 0%, #ffeeee 100%);
+  border-color: #ebb6b6;
+}
+
+.case-card img {
+  width: 100%;
+  height: clamp(220px, 28vw, 300px);
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  object-position: center;
+  padding: 0.35rem;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #f0d3d3;
+}
+
+.card-label {
+  display: inline-block;
+  padding: 0.28rem 0.58rem;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  border: 1px solid #efc4c4;
+  background: #ffecec;
+  color: #a31616;
+}
+
+.case-card.after .card-label {
+  background: #cf1919;
+  border-color: #cf1919;
+  color: #fff;
+}
+
+.card-metric {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #a21414;
+}
+
+.case-card ul {
+  margin: 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.case-card li {
+  color: #4c5465;
+}
+
+.thumbnails-link-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.thumbnails-link-btn {
+  min-width: 190px;
+}
+
+.cta-section {
+  text-align: center;
+  background: linear-gradient(135deg, #cf1919 0%, #a61212 100%);
+  color: #fff;
+  padding: 1.15rem;
+  border-radius: 14px;
+  margin-top: 0.9rem;
+  box-shadow: 0 14px 28px rgba(207, 25, 25, 0.28);
+}
+
+.cta-section h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.cta-section p {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #cf1919;
+  color: #ffffff;
+  background: linear-gradient(135deg, #cf1919 0%, #a61212 100%);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #e02228 0%, #b81318 100%);
+}
+
+@media (max-width: 1200px) {
+  .case-cards {
+    width: min(100%, 860px);
+  }
+}
+
+@media (max-width: 768px) {
+  .case-cards {
+    grid-template-columns: 1fr;
+    width: min(100%, 560px);
+    gap: 0.75rem;
+  }
+
+  .case-card img {
+    height: clamp(200px, 48vw, 260px);
+  }
+}

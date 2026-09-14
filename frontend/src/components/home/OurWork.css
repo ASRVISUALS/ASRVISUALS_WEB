@@ -1,0 +1,32 @@
+.our-work { padding: clamp(1.2rem, 3vw, 2.2rem); background: linear-gradient(180deg, #fffdfa 0%, #fff6f0 100%); border: 1px solid rgba(225,29,46,.1); border-radius: 18px; color: #141414; box-shadow: 0 24px 60px rgba(225,29,46,.08); }
+.our-work-heading { text-align: center; margin-bottom: 1.5rem; }
+.our-work-eyebrow { color: #e11d2e; font-size: .75rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.our-work-heading h2 { margin: .35rem 0 .45rem; font-size: clamp(1.8rem, 4vw, 2.7rem); color: #141414; }
+.our-work-heading p { margin: 0 auto; max-width: 560px; color: #6b6b6b; }
+.our-work-tabs { display: flex; justify-content: center; gap: .55rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.our-work-tabs button { border: 1px solid rgba(20,20,20,.14); border-radius: 999px; background: rgba(255,255,255,.76); color: #6b6b6b; padding: .55rem .85rem; cursor: pointer; transition: background .2s, transform .2s, border-color .2s, box-shadow .2s; }
+.our-work-tabs button:hover { transform: translateY(-2px); border-color: #ff6b1a; color: #141414; box-shadow: 0 8px 18px rgba(255,107,26,.12); }
+.our-work-tabs button.is-active { background: linear-gradient(90deg, #e11d2e, #ff6b1a); border-color: transparent; color: #fff; box-shadow: 0 10px 22px rgba(225,29,46,.2); }
+.our-work-tabs span { margin-left: .4rem; opacity: .7; font-size: .75rem; }
+.our-work-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; animation: work-reveal .35s ease both; }
+.our-work-card { min-width: 0; overflow: hidden; background: rgba(255,255,255,.78); border: 1px solid rgba(20,20,20,.1); border-radius: 12px; box-shadow: 0 10px 24px rgba(20,20,20,.05); }
+.our-work-poster { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; overflow: hidden; background: #f0e8e2; cursor: pointer; }
+.our-work-poster img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .3s, opacity .3s; }
+.our-work-poster:hover img { transform: scale(1.05); opacity: .78; }
+.our-work-play { position: absolute; inset: 50% auto auto 50%; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: linear-gradient(135deg, #e11d2e, #ff6b1a); color: #fff; transform: translate(-50%, -50%); box-shadow: 0 8px 20px rgba(225,29,46,.28); }
+.our-work-live-badge { position: absolute; top: .65rem; left: .65rem; padding: .35rem .5rem; border-radius: 999px; background: #e11d2e; color: #fff; font-size: .62rem; font-weight: 800; letter-spacing: .08em; box-shadow: 0 6px 14px rgba(225,29,46,.28); }
+.our-work-live-badge.upcoming { background: #ff6b1a; }
+.our-work-card-copy { padding: .8rem .9rem 1rem; }
+.our-work-card-copy span { color: #e11d2e; font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; }
+.our-work-card-copy h3 { margin: .35rem 0 0; font-size: 1rem; color: #141414; }
+.our-work-skeleton-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.our-work-skeleton { display: block; aspect-ratio: 16 / 9; border-radius: 12px; background: linear-gradient(90deg, #f4eae4 25%, #fff 50%, #f4eae4 75%); background-size: 200% 100%; animation: work-shimmer 1.2s infinite; }
+.our-work-modal { position: fixed; z-index: 1000; inset: 0; display: grid; place-items: center; padding: 1rem; background: rgba(20,20,20,.58); backdrop-filter: blur(8px); }
+.our-work-modal-content { position: relative; width: min(960px, 100%); aspect-ratio: 16 / 9; background: #fffdfa; box-shadow: 0 24px 80px rgba(225,29,46,.2); }
+.our-work-modal iframe { width: 100%; height: 100%; border: 0; }
+.our-work-modal-close { position: absolute; z-index: 1; top: -.8rem; right: -.8rem; width: 2.2rem; height: 2.2rem; border: 0; border-radius: 50%; background: #e0443d; color: #fff; font-size: 1.5rem; cursor: pointer; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@keyframes work-reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes work-shimmer { to { background-position: -200% 0; } }
+@media (max-width: 900px) { .our-work-grid, .our-work-skeleton-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .our-work-grid, .our-work-skeleton-grid { grid-template-columns: 1fr; } .our-work { border-radius: 12px; } }
