@@ -1,0 +1,279 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Brand Palette */
+    --color-bg: 255 255 255;
+    --color-bg-alt: 245 245 247;
+    --color-panel: 245 245 247;
+    --color-border: 224 224 224;
+    
+    /* Brand Red Accent (Refined) */
+    --color-accent: 217 4 41;
+    --color-accent-strong: 184 3 31;
+    
+    /* Neutral Colors */
+    --color-text: 26 26 26;
+    --color-text-secondary: 102 102 102;
+    --color-highlight: 217 4 41;
+  }
+
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  html {
+    overflow-x: hidden;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-bg-primary text-text-primary font-body antialiased;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+    background-color: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    touch-action: manipulation;
+  }
+
+  /* Ensure touch targets are at least 44x44px for mobile */
+  button, a, input, textarea, select {
+    @apply touch-manipulation;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Prevent zoom on input focus on iOS */
+  input, textarea, select {
+    font-size: 16px;
+  }
+
+  /* Heading Styles with Neue Montreal */
+  h1 {
+    @apply font-heading text-text-primary;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    @apply font-heading text-text-primary;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.015em;
+  }
+
+  h3 {
+    @apply font-heading text-text-primary;
+    font-size: 1.875rem;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.015em;
+  }
+
+  h4 {
+    @apply font-heading text-text-primary;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.015em;
+  }
+
+  p {
+    @apply text-text-secondary;
+  }
+
+  /* Rest of your base styles... */
+}
+
+@layer components {
+  .container-custom {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Alternating Section Backgrounds */
+  .section-bg-primary {
+    @apply bg-bg-primary;
+  }
+
+  .section-bg-secondary {
+    @apply bg-bg-secondary;
+  }
+
+  /* Section Tags */
+  .section-tag {
+    @apply inline-flex items-center gap-2 rounded-lg border border-border-divider bg-bg-secondary px-3 py-1
+      text-xs font-semibold uppercase tracking-wider text-text-secondary;
+  }
+
+  .section-tag:hover {
+    @apply border-brand-red/50 text-brand-red transition-colors duration-300;
+  }
+
+  /* Glass Card with Subtle Shadows */
+  .glass-card {
+    @apply bg-bg-secondary border border-border-divider rounded-lg transition-all duration-300;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .glass-card:hover {
+    @apply border-brand-red/30 transform -translate-y-1;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+  }
+
+  /* CTA Button Styles */
+  .btn-cta {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold
+      bg-brand-red text-white transition-all duration-300 cursor-pointer;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-cta:hover {
+    @apply bg-brand-red-hover;
+    box-shadow: 0 0 20px rgba(225, 6, 0, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .btn-cta:active {
+    @apply bg-brand-red;
+    transform: translateY(0);
+  }
+
+  .btn-cta:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* Secondary Button */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold
+      bg-bg-secondary text-text-primary border border-border-divider transition-all duration-300 cursor-pointer;
+  }
+
+  .btn-secondary:hover {
+    @apply border-brand-red/50 text-brand-red;
+  }
+
+  /* Link Button */
+  .btn-link {
+    @apply text-brand-red font-semibold hover:text-brand-red-hover transition-colors duration-300 cursor-pointer;
+  }
+
+  /* Orb for background decoration */
+  .orb {
+    @apply absolute rounded-full blur-3xl opacity-30;
+    animation: float-orb 8s ease-in-out infinite;
+  }
+
+  .orb--slow {
+    animation-duration: 12s;
+  }
+
+  .orb--red {
+    @apply bg-brand-red;
+  }
+
+  .orb--dark {
+    @apply bg-bg-tertiary;
+  }
+
+  /* Bounce animation for buttons */ 
+  .btn-bounce:hover {
+    animation: btn-bounce 0.6s ease-in-out;
+  }
+
+  /* Card with subtle shadow */
+  .card-elevated {
+    @apply bg-bg-secondary border border-border-divider rounded-lg transition-all duration-300;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .card-elevated:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    transform: translateY(-4px);
+  }
+
+  /* Accent Text */
+  .text-accent {
+    @apply text-brand-red font-semibold;
+    letter-spacing: 0.015em;
+    text-transform: uppercase;
+  }
+
+  /* Border/Divider */
+  .divider {
+    @apply border-border-divider;
+  }
+
+  /* Light Mode Prose for Blog Content */
+  .prose-light {
+    @apply text-text-primary;
+  }
+
+  .prose-light h2 {
+    @apply text-3xl font-bold text-text-primary mt-8 mb-4;
+  }
+
+  .prose-light h3 {
+    @apply text-2xl font-semibold text-text-primary mt-6 mb-3;
+  }
+
+  .prose-light h4 {
+    @apply text-xl font-semibold text-text-primary mt-4 mb-2;
+  }
+
+  .prose-light p {
+    @apply text-text-secondary leading-relaxed mb-4;
+  }
+
+  .prose-light strong {
+    @apply text-text-primary font-bold;
+  }
+
+  .prose-light em {
+    @apply italic text-text-secondary;
+  }
+
+  .prose-light ul {
+    @apply list-disc list-inside text-text-secondary mb-4;
+  }
+
+  .prose-light ol {
+    @apply list-decimal list-inside text-text-secondary mb-4;
+  }
+
+  .prose-light li {
+    @apply mb-2;
+  }
+
+  .prose-light a {
+    @apply text-brand-red underline hover:text-brand-red-hover transition-colors;
+  }
+}
+
+@keyframes btn-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes float-orb {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -18px, 0);
+  }
+}

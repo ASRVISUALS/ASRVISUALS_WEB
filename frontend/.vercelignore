@@ -1,0 +1,60 @@
+# Vercel Build Ignore File
+# Files/directories to exclude from Vercel builds
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Development
+.env.local
+.env.*.local
+.DS_Store
+Thumbs.db
+
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Build output
+.next
+dist
+build
+out
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.prettierignore
+
+# Testing
+__tests__
+.jest
+coverage
+
+# Temporary files
+*.tmp
+tmp
+temp
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Documentation
+docs
+*.md
+README.md
+LICENSE
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.travis.yml
+Jenkinsfile
