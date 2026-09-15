@@ -24,6 +24,7 @@ export default function TermsPage() {
             <li><a href="#termination">7. Termination</a></li>
             <li><a href="#governing-law">8. Governing Law</a></li>
             <li><a href="#contact">9. Contact Information</a></li>
+            <li><a href="#portfolio-disclaimer">10. Portfolio &amp; Attribution Disclaimer</a></li>
           </ul>
         </nav>
 
@@ -119,6 +120,13 @@ export default function TermsPage() {
             <p><strong>Email:</strong> <a href="mailto:asrvisualshelpline@gmail.com">asrvisualshelpline@gmail.com</a></p>
             <p><strong>Website:</strong> <a href="https://asrvisuals.live" target="_blank" rel="noopener noreferrer">asrvisuals.live</a></p>
           </div>
+        </section>
+
+        <section className="legal-section" id="portfolio-disclaimer">
+          <h2>10. Portfolio &amp; Attribution Disclaimer</h2>
+          <p>
+            Please note that certain projects featured in our portfolio, as well as reviews and client imagery displayed in our testimonial section, may have been executed in collaboration with, or as a subcontractor for, third-party agencies and intermediaries, rather than directly with the end-client brand. In such instances, ASR Visuals claims ownership only of our specific creative and technical contributions. We do not claim direct ownership of the end-client’s intellectual property or imagery, nor do we imply a direct vendor relationship with the end-client brand unless explicitly stated. All portfolio materials, testimonial reviews, and associated client images are displayed strictly for demonstrative purposes.
+          </p>
         </section>
       </article>
     </main>

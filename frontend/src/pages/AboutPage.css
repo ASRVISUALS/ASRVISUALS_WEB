@@ -114,12 +114,30 @@
   padding: 1.1rem;
   box-shadow: 0 8px 18px rgba(16, 17, 23, 0.05);
   transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .founder-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 14px 28px rgba(16, 17, 23, 0.09);
   border-color: rgba(214, 31, 36, 0.3);
+}
+
+.founder-card h3 {
+  margin: 0.4rem 0 0;
+  font-size: 1.22rem;
+  color: #141722;
+}
+
+.founder-card p {
+  margin: 0.62rem 0 0;
+  color: #545a6d;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .founder-role {
@@ -131,12 +149,6 @@
   color: #b5131a;
 }
 
-.founder-card h3 {
-  margin: 0.4rem 0 0;
-  font-size: 1.22rem;
-  color: #141722;
-}
-
 .founder-edge {
   margin: 0.4rem 0 0;
   font-size: 0.92rem;
@@ -144,12 +156,112 @@
   color: #3a455c;
 }
 
-.founder-card p {
-  margin: 0.62rem 0 0;
-  color: #545a6d;
-  font-size: 0.9rem;
+.founder-card-new {
+  position: relative;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(16, 17, 23, 0.05);
+  margin: 0 auto;
+  padding-bottom: 2rem;
+  width: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.founder-card-new:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(16, 17, 23, 0.09);
+}
+
+.founder-card-banner {
+  width: 100%;
+  height: 8rem;
+  background: linear-gradient(to bottom left, #bae6fd, #fed7aa, #c2410c);
+  background-size: cover;
+  background-position: center;
+}
+
+.founder-card-new .founder-avatar-box {
+  width: 7rem;
+  height: 7rem;
+  min-height: 7rem;
+  flex-shrink: 0;
+  background-color: #1d4ed8;
+  border-radius: 50%;
+  border: 4px solid #f8fafc;
+  margin-top: -3.5rem;
+  z-index: 10;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.founder-card-new .founder-info {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.founder-card-new .founder-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.founder-card-new .founder-role {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.founder-card-new .founder-desc-box {
+  padding: 1.5rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 1;
+}
+
+.founder-card-new .founder-edge {
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.2rem;
+  font-size: 1rem;
+}
+
+.founder-card-new .founder-desc-text {
+  margin: 0;
+  color: #475569;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
+
+.founder-card-new .founder-follow {
+  background-color: #1d4ed8;
+  padding: 0.5rem 1.5rem;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  margin-top: auto;
+}
+
+.founder-card-new .founder-follow:hover {
+  background-color: #2563eb;
+  transform: scale(1.05);
+}
+
 
 .about-process {
   max-width: 1240px;

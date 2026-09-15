@@ -5,15 +5,14 @@ import './HomePage.css';
 import HeroSection from '../components/home/HeroSection';
 import { lazyWithRetry } from '../utils/lazyWithRetry';
 
-const BeforeAfterThumbnails = lazyWithRetry(() => import('../components/home/BeforeAfterThumbnails'));
 const Clients = lazyWithRetry(() => import('../components/home/Clients'));
 const Testimonials = lazyWithRetry(() => import('../components/home/Testimonials'));
 
 const trustStats = [
-  { value: '150+', label: 'Active creator and brand partners' },
-  { value: '5,000+', label: 'Videos delivered across formats' },
+  { value: '30+', label: 'Active creator and brand partners' },
+  { value: '1500+', label: 'Videos delivered across formats' },
   { value: '48-72h', label: 'Typical turnaround for first cut' },
-  { value: '8+', label: 'Years of collective editing expertise' }
+  { value: '4+', label: 'Years of collective editing expertise' }
 ];
 
 const capabilityCards = [
@@ -24,10 +23,6 @@ const capabilityCards = [
   {
     title: 'Long-Form Story Editing',
     description: 'Narrative pacing, visual rhythm, and structure tuned to improve watch-time and keep audiences engaged longer.'
-  },
-  {
-    title: 'Thumbnail Systems',
-    description: 'CTR-focused creative direction with repeatable thumbnail templates, testing variations, and title harmony.'
   },
   {
     title: 'Channel Growth Ops',
@@ -63,7 +58,7 @@ const growthWorkCategories = [
   {
     id: '02',
     title: 'Talking Heads',
-    detail: 'Authority-led personal brand cuts for shorts and long-form episodes.'
+    detail: 'Niche working cuts and high-retention edits for short form and long form.'
   },
   {
     id: '03',
@@ -143,8 +138,8 @@ export default function HomePage() {
             <span className="home-eyebrow">What we do</span>
             <h2 id="capabilities-title">A complete post-production growth stack</h2>
             <p>
-              Borrowing the best from top agency playbooks, we blend creative polish,
-              systemized delivery, and measurable outcomes in one service engine.
+              Borrowing the best from top agency playbooks, built for seamless
+              workflow, polished visuals, and real impact.
             </p>
           </div>
           <div className="home-capabilities-grid">
@@ -165,11 +160,10 @@ export default function HomePage() {
       <section className="our-work-home-section">
         <div className="container">
           <div className="work-panel">
-            <span className="home-eyebrow">Proof of execution</span>
+            <span className="home-eyebrow">SEE OUR EXECUTION</span>
             <h2>Work categories we execute for growth-focused teams</h2>
             <p className="work-panel-subtitle">
-              As requested, the home screen now shows only your provided categories.
-              Full video examples are available inside the work section.
+              Delivering high-retention video content that turns viewers into loyal followers and scales your brand.
             </p>
             <div className="home-work-categories-grid">
               {growthWorkCategories.map((item) => (
@@ -201,10 +195,9 @@ export default function HomePage() {
         <div className="container">
           <div className="home-section-head">
             <span className="home-eyebrow">How we work</span>
-            <h2 id="home-process-title">Transparent workflow, predictable quality</h2>
+            <h2 id="home-process-title">Our Workflow</h2>
             <p>
-              Inspired by leading service teams, our process keeps delivery fast,
-              collaborative, and quality-controlled from first brief to final export.
+              Built to keep everything super easy.
             </p>
           </div>
           <div className="home-process-grid">
@@ -218,16 +211,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <div className="home-deferred-section home-deferred-section-media">
-        {showDeferredSections ? (
-          <Suspense fallback={<div className="home-deferred-placeholder" aria-hidden="true" />}>
-            <BeforeAfterThumbnails />
-          </Suspense>
-        ) : (
-          <div className="home-deferred-placeholder" aria-hidden="true" />
-        )}
-      </div>
 
       <div className="home-deferred-section home-deferred-section-testimonials">
         {showDeferredSections ? (

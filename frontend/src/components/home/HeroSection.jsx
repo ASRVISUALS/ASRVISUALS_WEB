@@ -89,7 +89,7 @@ export default function HeroSection() {
               <span className="title-line title-highlight">High-Impact</span>
               <span className="title-line">Visual Content</span>
             </h1>
-            <p className="hero-subtitle">Psychology-backed short form editing, thumbnail systems, and social media management — built to increase visibility, click-through rate, and audience retention.</p>
+            <p className="hero-subtitle">Psychology-backed short form editing, and social media management - built to increase visibility, and audience retention.</p>
             <div className="hero-buttons">
               <MagneticButton href="https://cal.com/asrvisuals/30min" target="_blank" rel="noreferrer" className="asr-btn asr-btn-primary">
                 <span>Book Free Strategy Call</span><span className="cta-arrow" aria-hidden="true">→</span>

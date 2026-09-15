@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import './Testimonials.css';
 import Abhijit from '../../assets/images/clients/Abhijit-400.webp';
-import Andrew from '../../assets/images/clients/Andrew-400.webp';
-import Damon from '../../assets/images/clients/Damon-400.webp';
-import GlobalOpportunities from '../../assets/images/clients/Global Opportunities-400.webp';
+import BunMuska from '../../assets/images/clients/BunMuska.jpg';
+import Ongrow from '../../assets/images/clients/Ongrow.jpg';
 
 export default function Testimonials() {
+  const vimeoRef = useRef(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+
+  const handleVideoToggle = () => {
+    if (vimeoRef.current && vimeoRef.current.contentWindow) {
+      const method = isVideoPlaying ? 'pause' : 'play';
+      vimeoRef.current.contentWindow.postMessage(JSON.stringify({ method }), '*');
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
+
   const testimonials = [
     {
       name: 'Abhijit',
@@ -15,25 +25,18 @@ export default function Testimonials() {
       image: Abhijit
     },
     {
-      name: 'Global Opportunities',
-      role: 'Rashi, Ireland Country Head',
+      name: 'Bun Muska Media',
+      role: 'Media Agency',
       quote:
-        "Hi, I'm Rashi, the Ireland Country Head at Global Opportunities. I've had a fantastic experience working with ASR Visuals over the past 4 months. Their turnaround times are consistent, and their management of our social Instagram page has been completely seamless and hassle-free. Highly recommended!",
-      image: GlobalOpportunities
+        "Working with Sachin was an absolute pleasure. I'm thrilled to see him scaling his own venture and have no doubt it will be a huge success. Highly recommended!",
+      image: BunMuska
     },
     {
-      name: 'Andrew',
-      role: 'International Creator',
+      name: 'Ongrow Media',
+      role: 'Media Agency',
       quote:
-        "I've been working with ASR Visuals for 15 days. Zero delays, and I absolutely love the quality. I definitely recommend them to anyone needing solid work.",
-      image: Andrew
-    },
-    {
-      name: 'Damon',
-      role: 'Creator',
-      quote:
-        "Hey man! I'm Damon McLean. I've had a fantastic experience working with ASR Visuals every single time. I got the work on time with great quality, credit to Amit.",
-      image: Damon
+        "Working with Sachin! completely transformed our social media presence. Their grasp on short-form content is unmatched—the editing is crisp, the hooks are engaging, and our audience retention has skyrocketed. I must recommend to take a look.",
+      image: Ongrow
     }
   ];
 
@@ -42,10 +45,12 @@ export default function Testimonials() {
   return (
     <section className="testimonials" id="testimonials">
       <div className="testimonials-container">
-        <p className="testimonials-kicker">Testimonials</p>
+        <div style={{ textAlign: 'center', marginBottom: '0.8rem' }}>
+          <span className="home-eyebrow">TESTIMONIALS</span>
+        </div>
         <h2>What Clients Say After Working With ASR Visuals</h2>
         <p className="testimonials-intro">
-          From creator brands to international teams, our partners choose us for growth-focused execution and repeatable quality.
+          Trusted by one of the biggest companies and international creators.
         </p>
 
         <div className="testimonials-slider" aria-label="Testimonials slider">
@@ -75,6 +80,38 @@ export default function Testimonials() {
                 <p className="testimonial-quote">"{item.quote}"</p>
               </article>
             ))}
+          </div>
+        </div>
+
+        <div className="video-testimonial-section">
+          <div className="video-testimonial-container">
+            <div className="video-wrapper">
+              <iframe 
+                src="https://player.vimeo.com/video/1226930160?title=0&byline=0&portrait=0&badge=0&controls=0&api=1" 
+                width="100%" 
+                height="100%" 
+                frameBorder="0" 
+                allow="autoplay; fullscreen; picture-in-picture" 
+                allowFullScreen
+                title="Bun Muska Media - Prab Singh Testimonial"
+                ref={vimeoRef}
+              ></iframe>
+              <button 
+                className={`video-play-btn ${isVideoPlaying ? 'playing' : ''}`}
+                onClick={handleVideoToggle}
+                aria-label={isVideoPlaying ? 'Pause video' : 'Play video'}
+              >
+                {isVideoPlaying ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                )}
+              </button>
+            </div>
+            <div className="video-testimonial-info">
+              <h3>Prab Singh</h3>
+              <p>Founder, Bun Muska Media</p>
+            </div>
           </div>
         </div>
       </div>

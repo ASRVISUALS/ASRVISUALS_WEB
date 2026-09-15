@@ -7,7 +7,7 @@ import CaseStudy1 from '../assets/images/clients/short form case study-800.webp'
 import OurWork from '../components/home/OurWork';
 
 const serviceMetrics = [
-  { value: '150+', label: 'Active creator and brand partners' },
+  { value: '30+', label: 'Active creator and brand partners' },
   { value: '1500+', label: 'Videos delivered across formats' },
   { value: '48-72h', label: 'Typical turnaround for first cut' },
   { value: '98%', label: 'Client Satisfaction' }
@@ -66,7 +66,7 @@ export default function ServicesPage() {
           <p>
             {isWorkView
               ? 'Case studies and performance-focused delivery examples from ASR Visuals.'
-              : 'Everything you need for short form growth, thumbnail optimization, and social media management.'}
+              : 'Everything you need for short form growth and social media management.'}
           </p>
           <div className="services-hero-actions">
             {isWorkView ? (

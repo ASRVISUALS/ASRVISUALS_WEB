@@ -1,26 +1,28 @@
 import React from 'react';
 import './Clients.css';
 import Abhijit from '../../assets/images/clients/Abhijit-400.webp';
-import Andrew from '../../assets/images/clients/Andrew-400.webp';
 import Anushasan from '../../assets/images/clients/Anushasan-400.webp';
 import CarveGym from '../../assets/images/clients/Carve Gym-400.webp';
 import DetailingDaddy from '../../assets/images/clients/Detailing daddy-400.webp';
 import GlobalOpportunities from '../../assets/images/clients/Global Opportunities-400.webp';
 import Jugmugg from '../../assets/images/clients/Jugmugg-400.webp';
-import Vault from '../../assets/images/clients/Vault-400.webp';
 import Vedantam from '../../assets/images/clients/Vedantam-400.webp';
 import Velinna from '../../assets/images/clients/Velinna-400.webp';
+import BunMuska from '../../assets/images/clients/BunMuska.jpg';
+import Ongrow from '../../assets/images/clients/Ongrow.jpg';
+import LAG from '../../assets/images/clients/LAG.jpg';
 
 export default function Clients() {
   const clients = [
+    { name: 'Bun Muska Media', image: BunMuska },
+    { name: 'Ongrow Media', image: Ongrow },
+    { name: 'LAG Media', image: LAG },
     { name: 'Abhijit', image: Abhijit },
-    { name: 'Andrew', image: Andrew },
     { name: 'Anushasan', image: Anushasan },
     { name: 'Carve Gym', image: CarveGym },
     { name: 'Detailing Daddy', image: DetailingDaddy },
     { name: 'Global Opportunities', image: GlobalOpportunities },
     { name: 'Jugmugg', image: Jugmugg },
-    { name: 'Vault', image: Vault },
     { name: 'Vedantam', image: Vedantam },
     { name: 'Velinna', image: Velinna },
   ];

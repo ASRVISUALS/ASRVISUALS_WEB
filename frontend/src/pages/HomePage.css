@@ -126,6 +126,14 @@
   font-size: 0.95rem;
 }
 
+@media (min-width: 769px) {
+  .home-capability-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 0.45rem);
+  }
+}
+
 .home-capabilities-cta {
   margin-top: 1rem;
   text-align: center;

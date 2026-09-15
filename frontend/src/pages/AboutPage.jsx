@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import './AboutPage.css';
+import Sachin from '../assets/images/team/Sachin.jpg';
+import SachinCover from '../assets/images/team/SachinCover.png';
 
 export default function AboutPage() {
   const values = useMemo(() => [
@@ -45,6 +47,9 @@ export default function AboutPage() {
     {
       name: 'Sachin Rana',
       role: 'Founder & Strategic Lead',
+      avatar: Sachin,
+      cover: SachinCover,
+      linkedin: 'https://www.linkedin.com/in/sachin-rana-884a321aa?utm_source=share_via&utm_content=profile&utm_medium=member_android',
       edgeTitle: 'The Commerce Edge',
       description: 'With a background in Strategic Commerce, Sachin ensures that every visual asset we produce is a calculated business investment, not just an expense. He specializes in market analysis, conversion optimization, and high-level ROI tracking. Sachin\'s mission is to ensure that your content does not just get views - it drives revenue.'
     },
@@ -72,7 +77,6 @@ export default function AboutPage() {
         <div className="about-signature-shell">
           <div className="signature-grid">
             <article className="signature-main">
-              <p className="signature-kicker">The Fusion of Two Worlds</p>
               <h2 id="about-signature-title">About ASR Visuals: Precision Meets Strategy</h2>
               <p>
                 At ASR Visuals, we do not just make videos. We build Revenue Engines.
@@ -100,12 +104,34 @@ export default function AboutPage() {
 
           <div className="founders-grid">
             {founders.map((founder) => (
-              <article key={founder.name} className="founder-card">
-                <p className="founder-role">{founder.role}</p>
-                <h3>{founder.name}</h3>
-                <p className="founder-edge">{founder.edgeTitle}</p>
-                <p>{founder.description}</p>
-              </article>
+              founder.name === 'Sachin Rana' ? (
+                <div key={founder.name} className="founder-card-new">
+                  <div 
+                    className="founder-card-banner"
+                    style={founder.cover ? { backgroundImage: `url(${founder.cover})` } : {}}
+                  ></div>
+                  <div 
+                    className="founder-avatar-box" 
+                    style={founder.avatar ? { backgroundImage: `url(${founder.avatar})` } : {}}
+                  />
+                  <div className="founder-info">
+                    <span className="founder-name">{founder.name}</span>
+                    <p className="founder-role">{founder.role}</p>
+                  </div>
+                  <div className="founder-desc-box">
+                    <p className="founder-edge">{founder.edgeTitle}</p>
+                    <p className="founder-desc-text">{founder.description}</p>
+                  </div>
+                  <a className="founder-follow" href={founder.linkedin || "#"} target="_blank" rel="noopener noreferrer">Follow</a>
+                </div>
+              ) : (
+                <article key={founder.name} className="founder-card">
+                  <p className="founder-role">{founder.role}</p>
+                  <h3>{founder.name}</h3>
+                  <p className="founder-edge">{founder.edgeTitle}</p>
+                  <p>{founder.description}</p>
+                </article>
+              )
             ))}
           </div>
         </div>
