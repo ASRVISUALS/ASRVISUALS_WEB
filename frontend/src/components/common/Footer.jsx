@@ -22,6 +22,7 @@ export default function Footer() {
       <div className="footer-container">
         <section className="footer-contact-band">
           <div className="contact-band-left">
+            <p>ASR Visuals Location:</p>
             <div className="address-info">
               <span className="address-icon" aria-hidden="true">📍</span>
               <p>
@@ -36,7 +37,7 @@ export default function Footer() {
               onClick={handleGetInTouch} 
               className="asr-btn asr-btn-light"
             >
-              Get in Touch
+              Click here
             </button>
           </div>
         </section>

@@ -138,8 +138,7 @@ export default function HomePage() {
             <span className="home-eyebrow">What we do</span>
             <h2 id="capabilities-title">A complete post-production growth stack</h2>
             <p>
-              Borrowing the best from top agency playbooks, built for seamless
-              workflow, polished visuals, and real impact.
+              Built for seamless workflow, polished visuals, and real impact.
             </p>
           </div>
           <div className="home-capabilities-grid">

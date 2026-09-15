@@ -325,3 +325,9 @@
   color: #000000;
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+  .video-wrapper {
+    padding-bottom: 177.77%; /* 9:16 aspect ratio for mobile */
+  }
+}

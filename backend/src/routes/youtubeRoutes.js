@@ -21,9 +21,11 @@ const normalizeVideo = (video, category, source) => {
   };
 };
 
+const DEFAULT_CHANNEL_ID = 'UCdIeEUCrh0rPYyK2Nuk9NDw';
+
 router.get('/work', async (req, res) => {
   try {
-    const channelId = (req.query.channelId || process.env.YOUTUBE_CHANNEL_ID || process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID || '').trim();
+    const channelId = (req.query.channelId || process.env.YOUTUBE_CHANNEL_ID || process.env.NEXT_PUBLIC_YOUTUBE_CHANNEL_ID || DEFAULT_CHANNEL_ID).trim();
     if (!channelId) return res.status(500).json({ status: 'error', message: 'YouTube channel ID is not configured.' });
 
     const playlists = await fetchPlaylists(channelId);
@@ -47,7 +49,8 @@ router.get('/work', async (req, res) => {
 
     const categories = [...new Set([...Object.keys(playlistCategories), ...Array.from(videos.values(), (video) => video.category)])]
       .filter(Boolean)
-      .map((name) => ({ name, videos: Array.from(videos.values()).filter((video) => video.category === name) }));
+      .map((name) => ({ name, videos: Array.from(videos.values()).filter((video) => video.category === name) }))
+      .filter((category) => category.videos.length > 0);
 
     res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     res.set('Pragma', 'no-cache');

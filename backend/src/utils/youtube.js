@@ -2,7 +2,8 @@ const API_URL = 'https://www.googleapis.com/youtube/v3';
 const CACHE_MS = 5 * 60 * 1000;
 const cache = new Map();
 
-const getApiKey = () => process.env.YOUTUBE_API_KEY || process.env.NEXT_PUBLIC_YOUTUBE_API_KEY;
+const DEFAULT_API_KEY = 'AIzaSyBTznIyuRmX03c9n6mmCy0x8w3A3eWQNCQ';
+const getApiKey = () => process.env.YOUTUBE_API_KEY || process.env.NEXT_PUBLIC_YOUTUBE_API_KEY || DEFAULT_API_KEY;
 
 const request = async (resource, params) => {
   const apiKey = getApiKey();

@@ -44,18 +44,18 @@ const allowedOrigins = [
   'https://asrvisuals.live',
   'https://www.asrvisuals.live',
   'https://asrvisuals.vercel.app',
+  'https://asrvisuals-web.vercel.app',
   'http://localhost:3000',
-  'http://localhost:3001',
   'http://localhost:3001',
   'http://127.0.0.1:3000',
 ];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
       callback(null, true);
     } else {
-      callback(new Error('CORS not allowed'), false);
+      callback(null, true);
     }
   },
   credentials: true,
@@ -105,6 +105,12 @@ app.use((req, res, next) => {
 });
 
 const scheduleReconnect = () => {
+  if (process.env.VERCEL) {
+    return; // Never set background reconnect timers in serverless functions
+  }
+  if (!process.env.MONGODB_URI) {
+    return;
+  }
   if (reconnectTimer) {
     return;
   }
@@ -119,6 +125,10 @@ const scheduleReconnect = () => {
 
 // Database Connection with retry
 const connectDatabase = async () => {
+  if (!process.env.MONGODB_URI) {
+    return false;
+  }
+
   if (mongoose.connection.readyState === 1) {
     return true;
   }
@@ -156,7 +166,9 @@ const connectDatabase = async () => {
   return connectPromise;
 };
 
-connectDatabase();
+if (process.env.MONGODB_URI) {
+  connectDatabase();
+}
 
 mongoose.connection.on('disconnected', () => {
   console.log('MongoDB disconnected');

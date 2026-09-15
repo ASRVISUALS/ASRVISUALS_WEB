@@ -31,14 +31,6 @@ const serviceClusters = [
     ]
   },
   {
-    title: 'Thumbnail and Creative Packaging',
-    points: [
-      'CTR-focused thumbnail design systems',
-      'Visual experimentation with style-safe variations',
-      'Title-visual alignment for stronger click intent'
-    ]
-  },
-  {
     title: 'Content Operations and Support',
     points: [
       'Dedicated point of contact and project management',
@@ -63,21 +55,17 @@ export default function ServicesPage() {
       <section className="services-hero">
         <div className="services-hero-content">
           <h1>{isWorkView ? 'Our Work' : 'Services'}</h1>
+          <p>
+            {isWorkView
+              ? 'Explore edits shaped for attention, emotion, and measurable momentum.'
+              : 'Everything you need for short form growth and social media management.'}
+          </p>
           {!isWorkView && (
-            <p>
-              Everything you need for short form growth and social media management.
-            </p>
+            <div className="services-hero-actions">
+              <a href="#services-list" className="asr-btn asr-btn-primary">Explore Services</a>
+              <a href="#our-work" className="asr-btn asr-btn-ghost">Check Our Work</a>
+            </div>
           )}
-          <div className="services-hero-actions">
-            {isWorkView ? (
-              <Link to="/services" className="asr-btn asr-btn-primary">View Services Content</Link>
-            ) : (
-              <>
-                <a href="#services-list" className="asr-btn asr-btn-primary">Explore Services</a>
-                <a href="#our-work" className="asr-btn asr-btn-ghost">Check Our Work</a>
-              </>
-            )}
-          </div>
         </div>
       </section>
 

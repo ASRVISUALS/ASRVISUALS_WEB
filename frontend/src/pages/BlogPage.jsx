@@ -86,7 +86,6 @@ export default function BlogPage() {
         <div className="blog-shell blog-hero-shell">
           <div className="blog-hero-grid">
             <div className="blog-hero-content">
-              <p className="blog-kicker">ASR Visuals Blog</p>
               <h1>Our Blogs</h1>
               <p>
                 At ASR Visuals, every frame tells a story. Explore practical insights on video editing,
