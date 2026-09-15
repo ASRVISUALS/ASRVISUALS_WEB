@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './ContactPage.css';
 
 const INSTAGRAM_LINK = 'https://www.instagram.com/asr_visuals_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==';
-const YOUTUBE_LINK = 'https://www.youtube.com/@asrvisuals';
 const X_LINK = 'https://x.com/VisualsAsr83268';
 
 const GOOGLE_FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSdQEI2sNxC7JP5g2o6zPv9Xu9AxVqFjMawFUeAEOZVieFvUOw/formResponse';
