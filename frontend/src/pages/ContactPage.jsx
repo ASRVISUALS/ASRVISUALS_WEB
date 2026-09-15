@@ -15,12 +15,6 @@ const GOOGLE_FORM_ENTRIES = {
   projectDescription: 'entry.839337160'
 };
 
-const contactHighlights = [
-  'Dedicated project communication',
-  'Turnaround-focused production flow',
-  'Revision-friendly collaboration model'
-];
-
 const processExpectations = [
   {
     title: 'Share your requirement',
@@ -28,11 +22,11 @@ const processExpectations = [
   },
   {
     title: 'Get a practical plan',
-    detail: 'We respond with timeline suggestions and workflow structure.'
+    detail: 'We respond with suggestions and workflow structure.'
   },
   {
     title: 'Start production',
-    detail: 'Editing, review loops, and final exports with clear ownership.'
+    detail: 'Editing, review, revisions, final draft.'
   }
 ];
 
@@ -43,11 +37,11 @@ const quickFaq = [
   },
   {
     question: 'Can you handle recurring monthly content?',
-    answer: 'Yes. We support creators and teams with structured monthly workflows.'
+    answer: 'Yes, we do.'
   },
   {
     question: 'Do you support urgent requests?',
-    answer: 'Yes, when feasible. Mention urgency in your brief and we will prioritize accordingly.'
+    answer: 'Yes, mention urgency in your brief and we will prioritize accordingly.'
   }
 ];
 
@@ -181,17 +175,8 @@ export default function ContactPage() {
     <main className="contact-page">
       <section className="contact-hero-lite">
         <div className="container">
-          <span className="contact-eyebrow">Let us build your editing pipeline</span>
+          <span className="contact-eyebrow">FORM FILLING</span>
           <h1>Tell us what you need. We will handle the execution.</h1>
-          <p>
-            Inspired by high-converting agency pages, this form is structured to gather
-            exactly what we need to propose the best plan for your brand.
-          </p>
-          <div className="contact-highlights-row">
-            {contactHighlights.map((item) => (
-              <span key={item} className="contact-highlight-chip">{item}</span>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -212,7 +197,6 @@ export default function ContactPage() {
             </div>
             <div className="contact-social-links">
               <a href={INSTAGRAM_LINK} target="_blank" rel="noreferrer">Instagram</a>
-              <a href={YOUTUBE_LINK} target="_blank" rel="noreferrer">YouTube</a>
               <a href={X_LINK} target="_blank" rel="noreferrer">X</a>
             </div>
           </aside>
@@ -220,7 +204,7 @@ export default function ContactPage() {
           <div className="contact-form-container">
             <h2 className="contact-form-title">Drop your requirements here</h2>
             <p className="contact-form-subtitle">
-              Fill your details in our custom contact form. We'll review your project and get back to you with suggestions, pricing, and next steps - usually within 24 hours.
+              We'll review your project and get back to you with suggestions, pricing, and next steps - usually within 24 hours.
             </p>
 
             {success && <div className="alert alert-success">{success}</div>}

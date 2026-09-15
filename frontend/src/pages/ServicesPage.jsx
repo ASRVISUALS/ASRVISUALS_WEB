@@ -63,11 +63,11 @@ export default function ServicesPage() {
       <section className="services-hero">
         <div className="services-hero-content">
           <h1>{isWorkView ? 'Our Work' : 'Services'}</h1>
-          <p>
-            {isWorkView
-              ? 'Case studies and performance-focused delivery examples from ASR Visuals.'
-              : 'Everything you need for short form growth and social media management.'}
-          </p>
+          {!isWorkView && (
+            <p>
+              Everything you need for short form growth and social media management.
+            </p>
+          )}
           <div className="services-hero-actions">
             {isWorkView ? (
               <Link to="/services" className="asr-btn asr-btn-primary">View Services Content</Link>

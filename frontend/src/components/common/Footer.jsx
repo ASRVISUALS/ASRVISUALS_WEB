@@ -22,7 +22,6 @@ export default function Footer() {
       <div className="footer-container">
         <section className="footer-contact-band">
           <div className="contact-band-left">
-            <p>Ready to transform your content?</p>
             <div className="address-info">
               <span className="address-icon" aria-hidden="true">📍</span>
               <p>
@@ -31,8 +30,8 @@ export default function Footer() {
             </div>
           </div>
           <div className="contact-band-right">
+            <p>Ready to transform your content?</p>
             <h3>Get in Touch</h3>
-            <p>Share your project details with us.</p>
             <button 
               onClick={handleGetInTouch} 
               className="asr-btn asr-btn-light"
