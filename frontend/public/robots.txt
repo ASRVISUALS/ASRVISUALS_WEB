@@ -3,6 +3,7 @@
 
 User-agent: *
 Allow: /
+Allow: /manifest.json
 Disallow: /admin
 Disallow: /*.json$
 Disallow: /api/

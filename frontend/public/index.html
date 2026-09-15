@@ -59,11 +59,16 @@
       fetchpriority="high"
       type="image/webp"
     />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap" media="print" onload="this.media='all'" />
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Sora:wght@600;700;800&display=swap" />
     </noscript>
+    <style>
+      :root { --bg-light: #ffffff; --text-dark: #121316; --brand-red: #e11d2e; }
+      body { margin: 0; font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff8f8; color: #121316; -webkit-font-smoothing: antialiased; }
+      #root { min-height: 100vh; }
+      .app-boot-fallback { display: flex; align-items: center; justify-content: center; min-height: 50vh; font-size: 1.1rem; color: #666; }
+    </style>
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <script type="application/ld+json">
       {
