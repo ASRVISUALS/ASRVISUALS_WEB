@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './Testimonials.css';
 import Abhijit from '../../assets/images/clients/Abhijit-400.webp';
 import BunMuska from '../../assets/images/clients/BunMuska.jpg';
@@ -7,14 +7,88 @@ import Ongrow from '../../assets/images/clients/Ongrow.jpg';
 export default function Testimonials() {
   const vimeoRef = useRef(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [showControls, setShowControls] = useState(true);
+  const hideTimeoutRef = useRef(null);
 
-  const handleVideoToggle = () => {
+  const resetHideTimer = useCallback(() => {
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+    }
+    hideTimeoutRef.current = setTimeout(() => {
+      setShowControls(false);
+    }, 2500);
+  }, []);
+
+  const handleVideoToggle = useCallback(() => {
     if (vimeoRef.current && vimeoRef.current.contentWindow) {
-      const method = isVideoPlaying ? 'pause' : 'play';
-      vimeoRef.current.contentWindow.postMessage(JSON.stringify({ method }), '*');
-      setIsVideoPlaying(!isVideoPlaying);
+      if (isVideoPlaying) {
+        vimeoRef.current.contentWindow.postMessage(JSON.stringify({ method: 'pause' }), '*');
+        setIsVideoPlaying(false);
+        setShowControls(true);
+        if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+      } else {
+        vimeoRef.current.contentWindow.postMessage(JSON.stringify({ method: 'play' }), '*');
+        setIsVideoPlaying(true);
+        setShowControls(true);
+        resetHideTimer();
+      }
+    }
+  }, [isVideoPlaying, resetHideTimer]);
+
+  const handleWrapperTap = () => {
+    if (!isVideoPlaying) {
+      handleVideoToggle();
+    } else {
+      if (!showControls) {
+        setShowControls(true);
+        resetHideTimer();
+      } else {
+        handleVideoToggle();
+      }
     }
   };
+
+  const handleMouseMove = () => {
+    if (isVideoPlaying) {
+      setShowControls(true);
+      resetHideTimer();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (isVideoPlaying) {
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+      setShowControls(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleMessage = (event) => {
+      try {
+        let data = event.data;
+        if (typeof data === 'string') {
+          data = JSON.parse(data);
+        }
+        if (data) {
+          if (data.event === 'play') {
+            setIsVideoPlaying(true);
+          } else if (data.event === 'pause' || data.event === 'finish' || data.event === 'ended') {
+            setIsVideoPlaying(false);
+            setShowControls(true);
+            if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+          }
+        }
+      } catch {
+        // ignore non-json messages
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    };
+  }, []);
 
   const testimonials = [
     {
@@ -85,7 +159,12 @@ export default function Testimonials() {
 
         <div className="video-testimonial-section">
           <div className="video-testimonial-container">
-            <div className="video-wrapper">
+            <div 
+              className="video-wrapper"
+              onClick={handleWrapperTap}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
               <iframe 
                 src="https://player.vimeo.com/video/1226930160?title=0&byline=0&portrait=0&badge=0&controls=0&api=1" 
                 width="100%" 
@@ -96,9 +175,14 @@ export default function Testimonials() {
                 title="Bun Muska Media - Prab Singh Testimonial"
                 ref={vimeoRef}
               ></iframe>
+              <div className="video-touch-overlay" aria-hidden="true" />
               <button 
-                className={`video-play-btn ${isVideoPlaying ? 'playing' : ''}`}
-                onClick={handleVideoToggle}
+                type="button"
+                className={`video-play-btn ${isVideoPlaying ? 'playing' : ''} ${showControls ? 'is-visible' : 'is-hidden'}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleVideoToggle();
+                }}
                 aria-label={isVideoPlaying ? 'Pause video' : 'Play video'}
               >
                 {isVideoPlaying ? (

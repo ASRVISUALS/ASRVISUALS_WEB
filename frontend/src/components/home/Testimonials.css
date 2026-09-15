@@ -271,14 +271,23 @@
   height: 100%;
 }
 
+.video-touch-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  cursor: pointer;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .video-play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
   width: 64px;
   height: 64px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   border: none;
   border-radius: 50%;
   display: flex;
@@ -287,23 +296,27 @@
   cursor: pointer;
   z-index: 10;
   color: #b91c1c;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s ease;
+  pointer-events: auto;
+  opacity: 1;
 }
 
 .video-play-btn:hover {
-  transform: translate(-50%, -50%) scale(1.1);
+  transform: translate(-50%, -50%) scale(1.08);
   background: #ffffff;
 }
 
-.video-play-btn.playing {
+.video-play-btn.is-hidden {
   opacity: 0;
   pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.85);
 }
 
-.video-wrapper:hover .video-play-btn.playing {
+.video-play-btn.is-visible {
   opacity: 1;
   pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .video-testimonial-info {
